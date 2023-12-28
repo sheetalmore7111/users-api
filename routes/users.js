@@ -28,15 +28,37 @@ app.get("/getUsers", async (req, res) => {
 
 // Post Users:
 app.post("/addUser", async (req, res) => {
-  const { firstName, lastName, userRole } = req.body;
-  if (!firstName || !lastName || !userRole) {
-    return res
-      .status(400)
-      .json({ error: "firstName, lastName, and userRole are required fields" });
+  const {
+    firstName,
+    userRole,
+    imageUrl,
+    emailId,
+    contact,
+    designation,
+    company,
+  } = req.body;
+  if (
+    !firstName ||
+    !userRole ||
+    !imageUrl ||
+    !emailId ||
+    !contact ||
+    !designation ||
+    !company
+  ) {
+    return res.status(400).json({ error: "All fields are Compulsory to fill" });
   }
-  const values = [firstName, lastName, userRole];
+  const values = [
+    firstName,
+    userRole,
+    imageUrl,
+    emailId,
+    contact,
+    designation,
+    company,
+  ];
   const querry =
-    "insert into users (firstName, lastName, userRole) values (?, ?, ?)";
+    "insert into users (firstName, userRole, imageUrl, emailId, contact, designation, company) values (?, ?, ?, ?, ?, ?,?)";
   await connection
     .query(querry, values)
     .then((response) => {
@@ -53,9 +75,26 @@ app.put("/update/:id", async (req, res) => {
   const id = req.params.id;
   if (/^[0-9]/.test(id)) {
     const querry =
-      "update users set firstName=?, lastName=?, userRole=? where id=?";
-    const { firstName, lastName, userRole } = req.body;
-    const values = [firstName, lastName, userRole, id];
+      "update users set firstName=?, userRole=?, imageUrl=?, emailId=?, contact=?, designation=?, company=? where id=?";
+    const {
+      firstName,
+      userRole,
+      imageUrl,
+      emailId,
+      contact,
+      designation,
+      company,
+    } = req.body;
+    const values = [
+      firstName,
+      userRole,
+      imageUrl,
+      emailId,
+      contact,
+      designation,
+      company,
+      id,
+    ];
     await connection
       .query(querry, values)
       .then((response) => {
