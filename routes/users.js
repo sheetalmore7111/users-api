@@ -27,15 +27,20 @@ app.get("/getUsers", async (req, res) => {
 });
 
 // Post Users:
-app.post("/addUser", (req, res) => {
+app.post("/addUser", async (req, res) => {
   const { firstName, lastName, userRole } = req.body;
   const values = [firstName, lastName, userRole];
   const querry =
     "insert into users (firstName, lastName, userRole) values (?, ?, ?)";
-  connection.query(querry, values, (err, result) => {
-    if (err) console.log(err);
-    else res.send(result);
-  });
+  await connection
+    .query(querry, values)
+    .then((response) => {
+      const [result] = response;
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 // Update User:
