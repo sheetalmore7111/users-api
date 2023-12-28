@@ -29,6 +29,11 @@ app.get("/getUsers", async (req, res) => {
 // Post Users:
 app.post("/addUser", async (req, res) => {
   const { firstName, lastName, userRole } = req.body;
+  if (!firstName || !lastName || !userRole) {
+    return res
+      .status(400)
+      .json({ error: "firstName, lastName, and userRole are required fields" });
+  }
   const values = [firstName, lastName, userRole];
   const querry =
     "insert into users (firstName, lastName, userRole) values (?, ?, ?)";
