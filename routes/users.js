@@ -41,14 +41,18 @@ app.post("/addUser", (req, res) => {
 // Update User:
 app.put("/update/:id", (req, res) => {
   const id = req.params.id;
-  const querry =
-    "update users set firstName=?, lastName=?, userRole=? where id=?";
-  const { firstName, lastName, userRole } = req.body;
-  const values = [firstName, lastName, userRole, id];
-  connection.query(querry, values, (err, result) => {
-    if (err) console.log(err);
-    else res.send(result);
-  });
+  if (/^[0-9]/.test(id)) {
+    const querry =
+      "update users set firstName=?, lastName=?, userRole=? where id=?";
+    const { firstName, lastName, userRole } = req.body;
+    const values = [firstName, lastName, userRole, id];
+    connection.query(querry, values, (err, result) => {
+      if (err) console.log(err);
+      else res.send(result);
+    });
+  } else {
+    res.send("Invalid id");
+  }
 });
 
 // Delete User;
