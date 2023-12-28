@@ -13,12 +13,16 @@ const connection = require("../db.config");
 let app = express();
 
 // Get All Users
-app.get("/getUsers", (req, res) => {
+app.get("/getUsers", async (req, res) => {
   const querry = "select * from users";
-  connection.query(querry, (err, result) => {
-    if (err) console.log(err);
-    else res.send(result);
-  });
+  await connection
+    .query(querry)
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 // Post Users:
