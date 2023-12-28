@@ -49,17 +49,22 @@ app.post("/addUser", async (req, res) => {
 });
 
 // Update User:
-app.put("/update/:id", (req, res) => {
+app.put("/update/:id", async (req, res) => {
   const id = req.params.id;
   if (/^[0-9]/.test(id)) {
     const querry =
       "update users set firstName=?, lastName=?, userRole=? where id=?";
     const { firstName, lastName, userRole } = req.body;
     const values = [firstName, lastName, userRole, id];
-    connection.query(querry, values, (err, result) => {
-      if (err) console.log(err);
-      else res.send(result);
-    });
+    await connection
+      .query(querry, values)
+      .then((response) => {
+        const [result] = response;
+        res.send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
     res.send("Invalid id");
   }
