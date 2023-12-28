@@ -71,13 +71,18 @@ app.put("/update/:id", async (req, res) => {
 });
 
 // Delete User;
-app.delete("/delete/:id", (req, res) => {
+app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
   const querry = "delete from users where id = ?";
-  connection.query(querry, id, (err, result) => {
-    if (err) console.log(err);
-    else res.send(result);
-  });
+  await connection
+    .query(querry, id)
+    .then((response) => {
+      const [result] = response;
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = app;
