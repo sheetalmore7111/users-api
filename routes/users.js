@@ -18,7 +18,8 @@ app.get("/getUsers", async (req, res) => {
   await connection
     .query(querry)
     .then((response) => {
-      res.send(response);
+      const [result] = response;
+      res.send(result);
     })
     .catch((err) => {
       console.log(err);
