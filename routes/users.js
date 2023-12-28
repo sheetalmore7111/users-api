@@ -13,7 +13,7 @@ const connection = require("../db.config");
 let app = express();
 
 // Get All Users
-app.get("/getUsers", async (req, res) => {
+app.get("/contacts", async (req, res) => {
   const querry = "select * from users";
   await connection
     .query(querry)
@@ -27,7 +27,7 @@ app.get("/getUsers", async (req, res) => {
 });
 
 // Post Users:
-app.post("/addUser", async (req, res) => {
+app.post("/createContact", async (req, res) => {
   const {
     firstName,
     userRole,
