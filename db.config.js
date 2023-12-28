@@ -1,15 +1,12 @@
-const mysql2 = require("mysql2");
+const mysql = require("mysql2");
 
-const connection = mysql2.createConnection({
+// Create a connection pool
+const pool = mysql.createPool({
   host: "srv944.hstgr.io",
   user: "u904598717_sheetal",
   password: "Sheetal@#123",
   database: "u904598717_sheetal",
 });
 
-connection.connect((err) => {
-  if (err) console.log(err);
-  else console.log("connected");
-});
-
-module.exports = connection;
+// Export the pool to use it in your routes/controllers
+module.exports = pool.promise();
