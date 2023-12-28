@@ -1,14 +1,14 @@
 const mysql2 = require("mysql2");
 
 const connection = mysql2.createConnection({
-  host: "srv944.hstgr.io / 86.38.202.103",
-  user: "sheetal",
+  host: "srv944.hstgr.io",
+  user: "u904598717_sheetal",
   password: "Sheetal@#123",
-  database: "sheetal",
+  database: "u904598717_sheetal",
 });
 
 connection.connect((err) => {
-  if (err) throw err;
+  if (err) console.log(err);
   else console.log("connected");
 });
 

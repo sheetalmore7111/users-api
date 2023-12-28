@@ -23,10 +23,10 @@ app.get("/getUsers", (req, res) => {
 
 // Post Users:
 app.post("/addUser", (req, res) => {
-  const { firstName, lastName, role } = req.body;
-  const values = [firstName, lastName, role];
+  const { firstName, lastName, userRole } = req.body;
+  const values = [firstName, lastName, userRole];
   const querry =
-    "insert into users (firstName, lastName, role) values (?, ?, ?)";
+    "insert into users (firstName, lastName, userRole) values (?, ?, ?)";
   connection.query(querry, values, (err, result) => {
     if (err) console.log(err);
     else res.send(result);
@@ -36,9 +36,10 @@ app.post("/addUser", (req, res) => {
 // Update User:
 app.put("/update/:id", (req, res) => {
   const id = req.params.id;
-  const querry = "update users set firstName=?, lastName=?, role=? where id=?";
-  const { firstName, lastName, role } = req.body;
-  const values = [firstName, lastName, role, id];
+  const querry =
+    "update users set firstName=?, lastName=?, userRole=? where id=?";
+  const { firstName, lastName, userRole } = req.body;
+  const values = [firstName, lastName, userRole, id];
   connection.query(querry, values, (err, result) => {
     if (err) console.log(err);
     else res.send(result);
