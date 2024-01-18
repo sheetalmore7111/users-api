@@ -60,11 +60,14 @@ app.post("/createContact", async (req, res) => {
     contact,
     designation,
     company,
+    gender,
+    dob,
   } = req.body;
+
   if (
     !firstName ||
     !userRole ||
-    !imageUrl ||
+    // !imageUrl ||
     !emailId ||
     !contact ||
     !designation ||
@@ -80,9 +83,13 @@ app.post("/createContact", async (req, res) => {
     contact,
     designation,
     company,
+    gender,
+    dob,
   ];
+  console.log(req.body);
   const querry =
-    "insert into users (firstName, userRole, imageUrl, emailId, contact, designation, company) values (?, ?, ?, ?, ?, ?,?)";
+    "insert into users (firstName, userRole, imageUrl, emailId, contact, designation, company, gender, dob) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  console.log(querry);
   await connection
     .query(querry, values)
     .then((response) => {
@@ -99,7 +106,7 @@ app.put("/update/:id", async (req, res) => {
   const id = req.params.id;
   if (/^[0-9]/.test(id)) {
     const querry =
-      "update users set firstName=?, userRole=?, imageUrl=?, emailId=?, contact=?, designation=?, company=? where id=?";
+      "update users set firstName=?, userRole=?, imageUrl=?, emailId=?, contact=?, designation=?, company=?, gender=?, dob=? where id=?";
     const {
       firstName,
       userRole,
@@ -108,6 +115,8 @@ app.put("/update/:id", async (req, res) => {
       contact,
       designation,
       company,
+      gender,
+      dob,
     } = req.body;
     const values = [
       firstName,
@@ -117,6 +126,8 @@ app.put("/update/:id", async (req, res) => {
       contact,
       designation,
       company,
+      gender,
+      dob,
       id,
     ];
     await connection
